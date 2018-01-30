@@ -3,6 +3,7 @@ const AuthenticationController = require('./controllers/authentication'),
    // UserController = require('./controllers/profile'),
     express = require('express'),
     passportService = require('./config/passport'),
+    quizController = require('./controllers/quiz'),
     passport = require('passport');
 
 // Middleware to require login/auth
@@ -15,6 +16,7 @@ module.exports = function(app) {
     const apiRoutes = express.Router(),
         authRoutes = express.Router(),
         fbRoutes = express.Router(),
+        quizRoutes  = express.Router(),
         userRoutes = express.Router();
 
     //=========================
@@ -25,6 +27,7 @@ module.exports = function(app) {
     apiRoutes.use('/auth', authRoutes);
     apiRoutes.use('/profile', userRoutes);
     apiRoutes.use('/auth/facebook', fbRoutes);
+    apiRoutes.use('/quizs', quizRoutes);
 
     // View user profile route
    // userRoutes.get('/:userId', requireAuth, UserController.viewProfile);
@@ -60,6 +63,15 @@ module.exports = function(app) {
         }
 
     });
+
+    quizRoutes.post('/create', quizController.createQuizQuestion);
+
+    quizRoutes.post('/:quiz_id/options', quizController.createQuestionOptions);
+
+    quizRoutes.get('/:quiz_id', quizController.getQuestionAndOptions);
+
+    quizRoutes.get('/', quizController.getAllQuestionsAndOptions);
+
 // Set url for API group routes
     app.use('/api', apiRoutes);
 };
