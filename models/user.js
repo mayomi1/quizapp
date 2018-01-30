@@ -7,6 +7,7 @@ const mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     bcrypt = require('bcrypt-nodejs');
 
+const findOrCreate = require('mongoose-find-or-create');
 
 
 //================================
@@ -19,8 +20,10 @@ const UserSchema = new Schema({
         },
         password: {
             type: String
+        },
+        facebookId: {
+            type: String
         }
-
     },
     {
         timestamps: true
@@ -54,5 +57,5 @@ UserSchema.methods.comparePassword = function (candidatePassword, cb) {
         cb(null, isMatch);
     });
 };
-
+UserSchema.plugin(findOrCreate);
 module.exports = mongoose.model('User', UserSchema);

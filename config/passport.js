@@ -4,15 +4,25 @@
 // Importing Passport, strategies, and config
 const passport = require('passport'),
     User = require('../models/user'),
+   // findOrCreate = require('mongoose-findorcreate');
     config = require('./main'),
     JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt,
-    LocalStrategy = require('passport-local');
+    LocalStrategy = require('passport-local'),
+    FacebookStrategy  =     require('passport-facebook').Strategy;
 
 
 /*Underneath that, we will tell passport that we have opted to use
 the email field rather than the username field*/
 const localOptions = { usernameField: 'email' };
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
 
 // Setting up local login strategy
 const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
@@ -50,6 +60,26 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
     });
 });
 
+const facebookLogin = new FacebookStrategy({
+        clientID: '448865812195346',
+        clientSecret: '68f0d449f5542299d48df87bde0563a5',
+        callbackURL: 'http://localhost:3000/api/auth/facebook/callback',
+        enableProof: true
+    },
+    function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            //Check whether the User exists or not using profile.id
+            //Further DB code.
+            User.findOrCreate({ facebookId: profile.id}, function (err, user) {
+                console.log(accessToken);
+                return user
+            });
+            return done(null, profile);
+        });
+    }
+)
+
 
 passport.use(jwtLogin);
 passport.use(localLogin);
+passport.use(facebookLogin);
