@@ -41,9 +41,9 @@ class UserAuth {
     login(req, res) {
 
         const userInfo = UserAuth.setUserInfo(req.user);
-
+        req.session.user = req.user;
         res.status(200).json({
-            token: 'JWT ' + UserAuth.generateToken(userInfo),
+            token: 'bearer ' + UserAuth.generateToken(userInfo),
             user: userInfo
         });
     };
@@ -78,6 +78,11 @@ class UserAuth {
         }).catch((error) => {
             return res.json(UserAuth.errorMessage(error))
         });
+    }
+
+    testLogin(req, res) {
+        console.log('working', req.session.user);
+        return res.json(req.user);
     }
 
 

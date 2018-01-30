@@ -23,6 +23,9 @@ const UserSchema = new Schema({
         },
         facebookId: {
             type: String
+        },
+        profile_dp: {
+            type: String
         }
     },
     {
