@@ -88,6 +88,14 @@ module.exports = function (app) {
     // to take a quiz
     takeQuizRoutes.get('/:quiz_id/options/:option_id', requireAuth,  takeQuizController.answerQuiz);
 
+    apiRoutes.get('/', function (req, res) {
+        return res.json({
+            status: true,
+            message: 'welcome to quiz app 😁😎, have fun 🧐',
+            data: 'check the documentation here: --- >>> https://app.swaggerhub.com/apis/mayomi/quizapp/1.0.0#/'
+        })
+    });
+
 // Set url for API group routes
     app.use('/api', apiRoutes);
 };
