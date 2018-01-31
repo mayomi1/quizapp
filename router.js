@@ -86,7 +86,7 @@ module.exports = function (app) {
     quizRoutes.get('/', quizController.getAllQuestionsAndOptions);
 
     // to take a quiz
-    takeQuizRoutes.get('/:quiz_id/options/:option_id', takeQuizController.answerQuiz);
+    takeQuizRoutes.get('/:quiz_id/options/:option_id', requireAuth,  takeQuizController.answerQuiz);
 
 // Set url for API group routes
     app.use('/api', apiRoutes);

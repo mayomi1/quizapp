@@ -29,6 +29,7 @@ class TakeQuiz {
         const selectedOptionId = req.params.option_id;
         const quiz_id = req.params.quiz_id;
 
+
         return OptionModel.findById(selectedOptionId).then((response) => {
             if (response.is_correct) {
                 TakeQuiz.responseMessage(CORRECT_MESSAGE, res);
