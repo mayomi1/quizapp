@@ -3,6 +3,13 @@
  */
 
 class Helpers {
+
+
+    /**
+     * Helper for return error messages
+     * @param error
+     * @param res
+     */
      errorMessage(error, res) {
         return res.json({
             status: false,
@@ -11,6 +18,12 @@ class Helpers {
         })
     }
 
+    /**
+     * Helper for return success messages
+     * @param data
+     * @param res
+     * @constructor
+     */
     SuccessMessage(data, res) {
         return res.json ({
             status: true,

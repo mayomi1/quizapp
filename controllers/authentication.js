@@ -8,6 +8,12 @@ const User = require('../models/user');
 const config = require('../config/main');
 
 class UserAuth {
+
+    /**
+     * To return error messages
+     * @param error
+     * @returns {{status: boolean, message: string, error}}
+     */
     static errorMessage(error) {
         return {
             status: false,
@@ -16,12 +22,22 @@ class UserAuth {
         }
     }
 
+    /**
+     * It generate token for user
+     * @param user
+     * @returns {*}
+     */
     static generateToken(user) {
         return jwt.sign(user, config.secret, {
             expiresIn: 10080 // in seconds
         });
     }
 
+    /**
+     * It set up user info response
+     * @param request
+     * @returns {{_id, email: (*|email|{type, lowercase}|{type, required, index})}}
+     */
     static setUserInfo(request) {
         return {
             _id: request._id,
@@ -29,6 +45,11 @@ class UserAuth {
         };
     }
 
+    /**
+     * It return error if user already exist
+     * @param user
+     * @param res
+     */
     static userExistBefore(user, res) {
 
             return res.json({
@@ -38,6 +59,11 @@ class UserAuth {
 
     }
 
+    /**
+     * To login
+     * @param req
+     * @param res
+     */
     login(req, res) {
 
         const userInfo = UserAuth.setUserInfo(req.user);
@@ -48,6 +74,12 @@ class UserAuth {
         });
     };
 
+    /**
+     * To register
+     * @param req
+     * @param res
+     * @returns {Promise.<T>|Promise}
+     */
     register(req, res) {
         const email = req.body.email;
         const password = req.body.password;
@@ -80,6 +112,11 @@ class UserAuth {
         });
     }
 
+    /**
+     * check if user is login
+     * @param req
+     * @param res
+     */
     testLogin(req, res) {
         console.log('working', req.session.user);
         return res.json(req.user);

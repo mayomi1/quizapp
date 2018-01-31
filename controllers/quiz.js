@@ -9,7 +9,12 @@ const EXCLUDE_OUTPUT = '-updatedAt -createdAt -__v';
 
 class Quiz {
 
-
+    /**
+     * Create a new quiz question
+     * @param req
+     * @param res
+     * @returns {Promise.<T>|Promise}
+     */
     createQuizQuestion (req, res) {
         const question = req.body.question;
         const newQuiz = QuizModel({
@@ -24,6 +29,12 @@ class Quiz {
 
     }
 
+    /**
+     * Create options for added question
+     * @param req
+     * @param res
+     * @returns {Promise.<T>|Promise}
+     */
     createQuestionOptions (req, res) {
         const quizId = req.params.quiz_id;
         const option = req.body.option;
@@ -46,6 +57,11 @@ class Quiz {
         })
     }
 
+    /**
+     * Get the question and options
+     * @param req
+     * @param res
+     */
     getQuestionAndOptions (req, res) {
         const quizId = req.params.quiz_id;
 
@@ -59,6 +75,11 @@ class Quiz {
         });
     }
 
+    /**
+     * Get all questions and options
+     * @param req
+     * @param res
+     */
      getAllQuestionsAndOptions (req, res) {
 
         QuizModel.find({}, EXCLUDE_OUTPUT)

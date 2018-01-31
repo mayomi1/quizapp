@@ -78,7 +78,7 @@ const facebookLogin = new FacebookStrategy({
             return done(null, profile);
         });
     }
-)
+);
 
 
 passport.use(jwtLogin);

@@ -18,13 +18,16 @@ let storage = multer.diskStorage({
 
 let upload = multer({storage: storage}).single('image');
 
-
+/**
+ * update profile dp on login
+ * @param req
+ * @param res
+ */
 module.exports = (req, res) => {
     upload(req, res, function (error) {
         if(error) {
             Helper.errorMessage(error, res);
         }
-
 
         let image;
 
