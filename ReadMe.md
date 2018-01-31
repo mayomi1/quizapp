@@ -1,3 +1,3 @@
-##Check the documentation [Here](https://quizapp.herokuapp.com) ##
+##Check the documentation [Here](https://app.swaggerhub.com/apis/mayomi/quizapp/1.0.0#/) ##
 
 ##Base URL https://quizapp.herokuapp.com/api
