@@ -82,7 +82,7 @@ module.exports = function (app) {
     // to get a quiz and its options
     quizRoutes.get('/:quiz_id', quizController.getQuestionAndOptions);
 
-    // to get all quiz and their options
+    // To get all quiz and their options
     quizRoutes.get('/', quizController.getAllQuestionsAndOptions);
 
     // to take a quiz
