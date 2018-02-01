@@ -62,9 +62,9 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
 });
 
 const facebookLogin = new FacebookStrategy({
-        clientID: '448865812195346',
-        clientSecret: '68f0d449f5542299d48df87bde0563a5',
-        callbackURL: 'https://simplequiz.herokuapp.com/api/auth/facebook/callback',
+        clientID: config.clientID,
+        clientSecret: config.clientSecret,
+        callbackURL: config.callbackURL,
         enableProof: true
     },
     function(accessToken, refreshToken, profile, done) {
