@@ -3,6 +3,7 @@
  */
 
 const multer = require('multer');
+const path = require('path');
 
 const Helper = require('../helper');
 const User = require('../models/user');
@@ -23,7 +24,7 @@ let upload = multer({storage: storage}).single('image');
  * @param req
  * @param res
  */
-module.exports = (req, res) => {
+exports.updateDisplayPicture = (req, res) => {
     upload(req, res, function (error) {
         if(error) {
             Helper.errorMessage(error, res);
@@ -38,6 +39,12 @@ module.exports = (req, res) => {
         const userId = req.params.user_id;
 
         return User.findById(userId).then((userRes) => {
+            if(userRes === null){
+                return res.json({
+                    status: false,
+                    message: 'Please register to upload an image'
+                })
+            }
             userRes.profile_dp = image;
             userRes.save();
             Helper.SuccessMessage(userRes, res)
@@ -45,4 +52,23 @@ module.exports = (req, res) => {
             Helper.errorMessage(error, res);
         })
     })
+};
+
+
+/**
+ * To get display picture
+ * @param req
+ * @param res
+ */
+exports.getDisplayPicture = (req, res) => {
+
+    let userId = req.params.user_id;
+    User.findById(userId).then((userRes) => {
+        res.sendFile(path.join(__dirname, '../uploads', userRes.profile_dp), function (err) {
+            if (err) {
+                res.send({msg: err.code})
+            }
+        })
+    })
+
 };

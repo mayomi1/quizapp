@@ -38,10 +38,13 @@ module.exports = function (app) {
     authRoutes.post('/register', AuthenticationController.register);
 
     // To update user profile picture
-    authRoutes.post('/profile/dp/:user_id', updateProfile);
+    userRoutes.post('/update_dp/:user_id', updateProfile.updateDisplayPicture);
+
+    //get DisplayPicture
+    userRoutes.get('/get_dp/:user_id', updateProfile.getDisplayPicture);
 
     // To get profile
-    authRoutes.get('/profile', requireAuth, AuthenticationController.testLogin);
+    userRoutes.get('/', AuthenticationController.testLogin);
 
     // Login route
     authRoutes.post('/login', requireLogin, AuthenticationController.login);
