@@ -72,7 +72,7 @@ const facebookLogin = new FacebookStrategy({
             //Check whether the User exists or not using profile.id
             //Further DB code.
             User.findOrCreate({ facebookId: profile.id}, function (err, user) {
-                console.log(accessToken);
+
                 return user
             });
             return done(null, profile);
